@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>apology.url.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+ --bg:#ffffff;
+ --text:#222;
+ --card:#f2f2f2;
+}
+body.dark{
+ --bg:#000;
+ --text:#bbb;
+ --card:#1a1a1a;
+ filter:grayscale(100%);
+}
+body{
+ margin:0;
+ font-family:'Segoe UI',sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ transition:0.6s;
+}
+section{
+ padding:50px 20px;
+ max-width:900px;
+ margin:auto;
+ text-align:center;
+}
+h1{font-size:36px;}
+h2{margin-top:40px;}
+p{font-size:18px;line-height:1.7;}
+
+.toggle{
+ display:flex;
+ justify-content:center;
+ gap:10px;
+ align-items:center;
+}
+
+button{
+ padding:12px 20px;
+ border:none;
+ border-radius:20px;
+ font-size:16px;
+ cursor:pointer;
+}
+
+.chat{
+ background:var(--card);
+ padding:20px;
+ border-radius:15px;
+ text-align:left;
+}
+.msg{
+ background:#dcf8c6;
+ padding:10px 14px;
+ border-radius:12px;
+ margin:10px 0;
+ width:fit-content;
+}
+
+.timer{
+ font-size:22px;
+ font-weight:bold;
+}
+
+.gallery img{
+ width:100%;
+ max-width:250px;
+ border-radius:12px;
+ margin:10px;
+}
+
+.promise-jar{
+ font-size:60px;
+ cursor:pointer;
+}
+
+.popup{
+ display:none;
+ padding:20px;
+ margin-top:20px;
+ background:var(--card);
+ border-radius:15px;
+ animation:fade 1s;
+}
+
+@keyframes fade{
+ from{opacity:0;}
+ to{opacity:1;}
+}
+
+.confetti{
+ position:fixed;
+ width:10px;
+ height:10px;
+ top:-10px;
+ animation:fall 3s linear;
+}
+@keyframes fall{
+ to{top:100vh;}
+}
+
+.coupon{
+ display:none;
+ border:2px dashed #444;
+ padding:20px;
+ margin-top:20px;
+ border-radius:15px;
+}
+
+.choice button{
+ margin:10px;
+}
+
+</style>
+</head>
+
+<body class="dark">
+
+<section>
+<h1>apology.url.com</h1>
+<p>A romantic apology website for my ex gf <b>Vaishnavi</b></p>
+
+<div class="toggle">
+<span>My World Without You</span>
+<input type="checkbox" id="themeToggle">
+<span>With You</span>
+</div>
+<p><i>You bring colors to my life.</i></p>
+</section>
+
+<section>
+<h2>⏳ Since Everything Changed</h2>
+<div class="timer" id="timer"></div>
+</section>
+
+<section>
+<h2>💬 Things I Never Said</h2>
+<div class="chat" id="chat"></div>
+</section>
+
+<section>
+<h2>📝 My Apology Letter</h2>
+<p>
+I accept my mistakes completely.  
+I became egoistic, insensitive, and distant.  
+You never deserved that version of me.  
+This apology is not to force you —  
+it is to own my mistakes.
+</p>
+</section>
+
+<section>
+<h2>🌸 Poetry</h2>
+<p>
+Galti meri thi,<br>
+par pyaar jhootha nahi tha.<br>
+Aaj bhi tu meri duaon me hai,<br>
+aur kal bhi rahegi.
+</p>
+</section>
+
+<section>
+<h2>📸 Our Memories</h2>
+<div class="gallery">
+<img src="https://i.ibb.co/WvZCqXrJ/f050c675-8b43-4e06-be87-a6d71669c771-d146cfb7-252f-48cb-ba3c-9da826f0f173-2.jpg">
+<img src="https://i.ibb.co/xbLT1BP/Screenshot-20251227-063846-Photos.jpg">
+<img src="https://i.ibb.co/Txmdv3Kr/Screenshot-20251227-145012-Gallery.jpg">
+<img src="https://i.ibb.co/RkN4dd2P/Screenshot-20251227-145038-Gallery.jpg">
+</div>
+</section>
+
+<section>
+<h2>🫙 Promise Jar</h2>
+<div class="promise-jar" onclick="showPromise()">🫙</div>
+<div class="popup" id="promise"></div>
+</section>
+
+<section>
+<h2>💝 Will You Forgive Me?</h2>
+<div class="choice">
+<button onclick="forgive()">I forgive you</button>
+<button onclick="noForgive()">No</button>
+</div>
+<div id="result"></div>
+</section>
+
+<section>
+<h2>🎁 Hidden Gift</h2>
+<div style="font-size:50px;cursor:pointer" onclick="openCoupon()">🎁</div>
+<div class="coupon" id="coupon">
+<h3>Coupon Code</h3>
+<p>One long hug 🤍 & Unlimited momos 🥟</p>
+<p>Redeemable anytime. Lifetime validity.</p>
+</div>
+</section>
+
+<audio id="music" loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<script>
+// THEME
+document.getElementById("themeToggle").addEventListener("change",e=>{
+ document.body.classList.toggle("dark");
+ if(!document.body.classList.contains("dark")){
+  document.getElementById("music").play();
+ }else{
+  document.getElementById("music").pause();
+ }
+});
+
+// TIMER
+const start=new Date("2023-10-01");
+setInterval(()=>{
+ let d=new Date()-start;
+ let days=Math.floor(d/(1000*60*60*24));
+ document.getElementById("timer").innerText=
+ days+" days since we drifted apart.";
+},1000);
+
+// CHAT
+const messages=[
+"I should have stopped you that day.",
+"I am really sorry.",
+"I accept my mistakes.",
+"My ego ruined things.",
+"Bas ek last chance…"
+];
+let i=0;
+function typeChat(){
+ if(i<messages.length){
+  let div=document.createElement("div");
+  div.className="msg";
+  div.innerText=messages[i];
+  document.getElementById("chat").appendChild(div);
+  i++;
+  setTimeout(typeChat,1200);
+ }
+}
+typeChat();
+
+// PROMISE JAR
+const promises=[
+"I promise to listen more and speak less.",
+"I promise to fix problems, not win arguments.",
+"I promise to cherish every little moment.",
+"I promise to understand before reacting.",
+"I promise to admit my mistakes without ego."
+];
+function showPromise(){
+ let p=promises[Math.floor(Math.random()*promises.length)];
+ let box=document.getElementById("promise");
+ box.style.display="block";
+ box.innerText=p;
+}
+
+// FORGIVE
+function forgive(){
+ document.getElementById("result").innerHTML="<p>Thank you for this chance 🤍</p>";
+ for(let i=0;i<40;i++){
+  let c=document.createElement("div");
+  c.className="confetti";
+  c.style.left=Math.random()*100+"vw";
+  c.style.background=["red","pink","yellow"][Math.floor(Math.random()*3)];
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),3000);
+ }
+}
+function noForgive(){
+ document.getElementById("result").innerHTML=
+ "<p>I understand. I respect your decision. I just wanted to apologize sincerely.</p>";
+}
+
+// COUPON
+function openCoupon(){
+ document.getElementById("coupon").style.display="block";
+}
+</script>
+
+</body>
+</html>
